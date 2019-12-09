@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/eight_dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@dimen/tv_clrone_add_item_title"
+            android:text="@string/tv_clrone_add_item_title"
             android:textSize="@dimen/tv_clrone_add_item_textSize"
             android:textStyle="bold"
             android:background="@color/tv_clone_recent_page_bkg"

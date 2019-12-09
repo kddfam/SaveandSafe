@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-class BaseFragment : Fragment(),CoroutineScope {
+abstract class BaseFragment : Fragment(),CoroutineScope {
 
     // Initializing Job Variable
     private lateinit var mJob : Job
