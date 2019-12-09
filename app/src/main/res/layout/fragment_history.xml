@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fgmnt.HistoryFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_layout_history_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/zero_dp"
+        android:layout_marginTop="@dimen/zero_dp">
+
+        <TextView
+            android:id="@+id/tv_clhone_recent_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/eight_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="@dimen/tv_clone_recent_page_padding"
+            android:text="@string/tv_recents"
+            android:textSize="@dimen/tv_clone_recent_page_textSize"
+            android:textStyle="bold"
+            android:background="@color/tv_clone_recent_page_bkg"/>
+
+        <TextView
+            android:id="@+id/tv_clhone_add_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eight_dp"
+            android:layout_marginTop="@dimen/eight_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_clhone_recent_page"
+            android:text="@string/add_amount_title"
+            android:textSize="@dimen/tv_clone_add_amount_textSize"
+            android:textStyle="bold"
+            android:gravity="start"/>
+
+        <EditText
+            android:id="@+id/et_clhone_amount"
+            android:layout_width="@dimen/et_clone_amount_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eight_dp"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_marginBottom="@dimen/sixteen_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_clhone_add_amount"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:inputType="number"
+            android:hint="@string/amount_hint"
+            android:paddingStart="@dimen/eight_dp"
+            android:paddingEnd="@dimen/zero_dp" />
+
+        <TextView
+            android:id="@+id/tv_clhone_done_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/sixteen_dp"
+            android:layout_marginBottom="@dimen/eight_dp"
+            app:layout_constraintStart_toEndOf="@id/et_clhone_amount"
+            app:layout_constraintTop_toBottomOf="@id/tv_clhone_add_amount"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/done_button_text"
+            android:textStyle="bold"
+            android:textSize="@dimen/tv_clone_done_button_textSize" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_layout_history_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/zero_dp"
+        android:layout_marginTop="@dimen/cons_layout_history_two_marginTop">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_clhtwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/zero_dp"
+            android:layout_marginTop="@dimen/zero_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="@dimen/eight_dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

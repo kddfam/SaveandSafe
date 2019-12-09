@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fgmnt.RecentFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_layout_recent_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/zero_dp"
+        android:layout_marginTop="@dimen/eight_dp">
+
+        <TextView
+            android:id="@+id/tv_clrone_add_item_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/eight_dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@dimen/tv_clrone_add_item_title"
+            android:textSize="@dimen/tv_clrone_add_item_textSize"
+            android:textStyle="bold"
+            android:background="@color/tv_clone_recent_page_bkg"
+            android:padding="@dimen/tv_clrone_add_item_padding" />
+
+        <TextView
+            android:id="@+id/tv_clrone_recent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eight_dp"
+            android:layout_marginTop="@dimen/eight_dp"
+            android:layout_marginBottom="@dimen/eight_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_clrone_add_item_page"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/tv_clrone_recent_title"
+            android:textStyle="bold"
+            android:textSize="@dimen/tv_clrone_recent_textSize" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons_layout_recent_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/zero_dp"
+        android:layout_marginTop="@dimen/cons_layout_recent_marginTop">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_clrtwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/zero_dp"
+            android:layout_marginTop="@dimen/zero_dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="@dimen/eight_dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

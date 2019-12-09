@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="eight_dp">8dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="sixteen_dp">16dp</dimen>
+    <dimen name="tv_clone_add_amount_textSize">29sp</dimen>
+    <dimen name="et_clone_amount_layout_width">300dp</dimen>
+    <dimen name="tv_clone_done_button_textSize">23sp</dimen>
+    <dimen name="cons_layout_history_two_marginTop">180dp</dimen>
+    <dimen name="tv_clone_recent_page_textSize">20sp</dimen>
+    <dimen name="tv_clone_recent_page_padding">3dp</dimen>
+    <dimen name="tv_clrone_recent_textSize">29sp</dimen>
+    <dimen name="cons_layout_recent_marginTop">130dp</dimen>
+    <dimen name="tv_clrone_add_item_title">New Item</dimen>
+    <dimen name="tv_clrone_add_item_textSize">20sp</dimen>
+    <dimen name="tv_clrone_add_item_padding">3dp</dimen>
+    <dimen name="tv_add_item_title_textSize">33sp</dimen>
+    <dimen name="twenty_four_dp">24dp</dimen>
+    <dimen name="thirty_two_dp">32dp</dimen>
+    <dimen name="bt_add_item_button_textSize">23sp</dimen>
+</resources>

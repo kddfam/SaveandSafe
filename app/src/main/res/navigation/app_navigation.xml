@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/welcomeToHistory"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/historyToRecent"
+            app:destination="@id/recentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.RecentFragment"
+        android:label="fragment_recent"
+        tools:layout="@layout/fragment_recent" >
+        <action
+            android:id="@+id/recentToAddItem"
+            app:destination="@id/addItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.AddItemFragment"
+        android:label="fragment_add_item"
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/backToRecent"
+            app:destination="@id/recentFragment" />
+    </fragment>
+</navigation>
