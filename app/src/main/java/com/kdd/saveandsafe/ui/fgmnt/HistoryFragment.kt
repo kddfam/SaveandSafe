@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import com.kdd.saveandsafe.R
 import com.kdd.saveandsafe.dtbse.dbcls.SandSDatabase
 import com.kdd.saveandsafe.dtbse.ety.PriceEntity
@@ -32,6 +33,7 @@ class HistoryFragment : BaseFragment() {
     lateinit var mRecentItemRecyclerView : RecyclerView
     lateinit var mAmountHistoryRecyclerView : RecyclerView
     lateinit var mSwipeRefreshLayoutAmount : SwipeRefreshLayout
+    lateinit var mSnackbar : Snackbar
 
     // Date and Time
     lateinit var mCalendar: Calendar
@@ -140,6 +142,9 @@ class HistoryFragment : BaseFragment() {
                 mDone.visibility = View.GONE
             }
         }
+
+        mSnackbar = Snackbar.make(view!!, "Price Added Successfully", Snackbar.LENGTH_LONG)
+        mSnackbar.show()
     }
 
     // Custom function which will be called everytime button pressed
