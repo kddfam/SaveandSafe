@@ -11,7 +11,9 @@ interface PriceDao {
     @Insert
     suspend fun addPrice(etyPrice : PriceEntity)
 
-    @Query("SELECT * FROM price_table")
+    @Query("SELECT * FROM price_table ORDER BY id DESC")
     suspend fun listPrice() : List<PriceEntity>
 
+    @Query("SELECT * FROM (SELECT * FROM price_table ORDER BY id DESC LIMIT 5) AS R ORDER BY id")
+    suspend fun listLastFive() : List<PriceEntity>
 }

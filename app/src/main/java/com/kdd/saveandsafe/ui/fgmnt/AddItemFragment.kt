@@ -84,6 +84,7 @@ class AddItemFragment : BaseFragment() {
         // Display message
         mSnackBar  = Snackbar.make(view!!, "Item Added Successfully", Snackbar.LENGTH_LONG)
         mSnackBar.show()
+
     }
 
 }

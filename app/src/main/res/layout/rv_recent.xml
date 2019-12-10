@@ -9,10 +9,14 @@
         android:id="@+id/cv_recent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/zero_dp"
-        android:layout_marginTop="@dimen/zero_dp"
+        android:layout_marginStart="@dimen/eight_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_marginEnd="@dimen/eight_dp"
+        android:layout_marginBottom="@dimen/eight_dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:cardElevation="@dimen/eight_dp"
         android:elevation="@dimen/eight_dp">
 

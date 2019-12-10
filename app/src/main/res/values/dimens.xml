@@ -4,7 +4,7 @@
     <dimen name="zero_dp">0dp</dimen>
     <dimen name="sixteen_dp">16dp</dimen>
     <dimen name="tv_clone_add_amount_textSize">29sp</dimen>
-    <dimen name="et_clone_amount_layout_width">300dp</dimen>
+    <dimen name="et_clone_amount_layout_width">250dp</dimen>
     <dimen name="tv_clone_done_button_textSize">23sp</dimen>
     <dimen name="cons_layout_history_two_marginTop">180dp</dimen>
     <dimen name="tv_clone_recent_page_textSize">20sp</dimen>
@@ -21,4 +21,5 @@
     <dimen name="cv_tv_item_price_textSize">30sp</dimen>
     <dimen name="cv_tv_item_time_textSize">15sp</dimen>
     <dimen name="cv_tv_item_date_textSize">15sp</dimen>
+    <dimen name="cons_layout_history_three_marginTop">400dp</dimen>
 </resources>
