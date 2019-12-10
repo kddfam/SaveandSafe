@@ -14,6 +14,9 @@ interface PriceDao {
     @Query("SELECT * FROM price_table ORDER BY id DESC")
     suspend fun listPrice() : List<PriceEntity>
 
-    @Query("SELECT * FROM (SELECT * FROM price_table ORDER BY id DESC LIMIT 5) AS R ORDER BY id")
-    suspend fun listLastFive() : List<PriceEntity>
+    @Query("SELECT * FROM (SELECT * FROM price_table ORDER BY id DESC LIMIT 3) AS R ORDER BY id")
+    suspend fun listLastThree() : List<PriceEntity>
+
+    @Query("SELECT * FROM (SELECT * FROM price_table ORDER BY id DESC LIMIT 1) AS ONE ORDER BY id")
+    suspend fun listRecent() : List<PriceEntity>
 }

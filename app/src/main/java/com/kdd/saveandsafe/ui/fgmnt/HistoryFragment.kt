@@ -2,6 +2,7 @@ package com.kdd.saveandsafe.ui.fgmnt
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class HistoryFragment : BaseFragment() {
 
     // Variable Declarations
     lateinit var mMoveToRecentButton : TextView
+    lateinit var mAddAmountTitle : TextView
     lateinit var mAmount : EditText
     lateinit var mDone : TextView
     lateinit var mRecentItemRecyclerView : RecyclerView
@@ -48,6 +50,9 @@ class HistoryFragment : BaseFragment() {
         // Variable Initialization
         mMoveToRecentButton = view!!.findViewById(R.id.tv_clhone_recent_page)
         mMoveToRecentButton.setOnClickListener { handleMoveToRecentButtonClick() }
+
+        // Add Amount Title TextView Initialization
+        mAddAmountTitle = view!!.findViewById(R.id.tv_clhone_add_amount)
 
         // EditText initialization
         mAmount = view!!.findViewById(R.id.et_clhone_amount)
@@ -75,13 +80,32 @@ class HistoryFragment : BaseFragment() {
         // Listing Amount Added by swiping refresh
         mSwipeRefreshLayoutAmount.setOnRefreshListener { onRefreshListener() }
 
-        // Listing Recent Item and amount (Recent 5)
+        // Listing Recent Item and amount (Recent 3)
         launch {
             context?.let {
                 val recent_items = SandSDatabase(it).getItemDao().listRecent()
-                val price_list = SandSDatabase(it).getPriceDao().listLastFive()
+                val price_list = SandSDatabase(it).getPriceDao().listLastThree()
                 mRecentItemRecyclerView.adapter = RecentAdapter(recent_items)
                 mAmountHistoryRecyclerView.adapter = HistoryAdapter(price_list)
+
+                // Fetching date and matching for view visibility
+                try {
+                    val dateToCheck = price_list.get(0)
+                    val convertStringToDateFormat = dateToCheck.p_date
+                    val dateConverter = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(convertStringToDateFormat)
+                    val dateChecker = checkDateRange(dateConverter!!)
+                    if (dateChecker == true) {
+                        mAddAmountTitle.visibility = View.GONE
+                        mAmount.visibility = View.GONE
+                        mDone.visibility = View.GONE
+                    }
+                    else {
+                        Log.e("Hello", "World")
+                    }
+                }
+                catch (e : Exception) {
+                    e.printStackTrace()
+                }
             }
         }
 
@@ -92,13 +116,14 @@ class HistoryFragment : BaseFragment() {
         mSwipeRefreshLayoutAmount.isRefreshing = true
         launch {
             context?.let {
-                val price_list = SandSDatabase(it).getPriceDao().listPrice()
+                val price_list = SandSDatabase(it).getPriceDao().listLastThree()
                 mAmountHistoryRecyclerView.adapter = HistoryAdapter(price_list)
                 mSwipeRefreshLayoutAmount.isRefreshing = false
             }
         }
     }
 
+    // Custom function which will work whenever the done button is clicked
     private fun handleDoneButtonClick() {
         val amount = mAmount.text.toString()
         val updated_price = mAmount.text.toString()
@@ -110,6 +135,9 @@ class HistoryFragment : BaseFragment() {
             val prices = PriceEntity(amount.toIntOrNull()!!,updated_price.toIntOrNull()!!,savings.toIntOrNull()!!,total_items,time,date)
             context?.let {
                 SandSDatabase(it).getPriceDao().addPrice(prices)
+                mAddAmountTitle.visibility = View.GONE
+                mAmount.visibility = View.GONE
+                mDone.visibility = View.GONE
             }
         }
     }
@@ -121,4 +149,8 @@ class HistoryFragment : BaseFragment() {
 
     }
 
+    // Custom function for checking the date range
+    private fun checkDateRange(date : Date) : Boolean {
+        return !(date.after(mCalendar.time))
+    }
 }
