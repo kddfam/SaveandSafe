@@ -11,7 +11,8 @@ import com.kdd.saveandsafe.dtbse.ety.PriceEntity
 
 @Database(
     entities = [PriceEntity::class, ItemEntity::class],
-    version = 1
+    version = 3,
+    exportSchema = false
 )
 abstract class SandSDatabase : RoomDatabase() {
 

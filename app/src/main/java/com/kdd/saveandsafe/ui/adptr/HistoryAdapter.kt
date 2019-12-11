@@ -12,6 +12,7 @@ class HistoryAdapter(val prices_list : List<PriceEntity>) : RecyclerView.Adapter
 
     class HistoryViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val amount : TextView = itemView.findViewById(R.id.cv_tv_amount)
+        val date : TextView = itemView.findViewById(R.id.cv_tv_date)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -24,6 +25,8 @@ class HistoryAdapter(val prices_list : List<PriceEntity>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val amount = prices_list[position]
+        val date = prices_list[position]
         holder.amount.text = amount.p_amount.toString()
+        holder.date.text = date.p_date.toString()
     }
 }

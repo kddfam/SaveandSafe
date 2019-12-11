@@ -19,11 +19,11 @@ import java.util.*
 
 class AddItemFragment : BaseFragment() {
 
-    // Variable Declarations
-    // Views
+    // Views Declarations
     lateinit var mItemName : EditText
     lateinit var mItemPrice : EditText
     lateinit var mAddButton : Button
+    lateinit var mSnackBar : Snackbar
 
     // Date and Time
     lateinit var mCalender : Calendar
@@ -32,9 +32,6 @@ class AddItemFragment : BaseFragment() {
     lateinit var mItemDate : String
     lateinit var mItemTime : String
 
-    // Others
-    lateinit var mSnackBar : Snackbar
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_item, container, false)
     }
@@ -42,8 +39,7 @@ class AddItemFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // Variable Initialization
-        // UI Views
+        // Views Initialization
         mItemName = view!!.findViewById(R.id.et_add_item_name)
         mItemPrice = view!!.findViewById(R.id.et_add_item_price)
         mAddButton = view!!.findViewById(R.id.bt_add_item)
@@ -55,13 +51,13 @@ class AddItemFragment : BaseFragment() {
         mItemTime = mSimpleTimeFormat.format(mCalender.time)
         mItemDate = mSimpleDateFormat.format(mCalender.time)
 
-        // Declaring Button Click Action
-        mAddButton.setOnClickListener { buttonClickListener() }
+        // Add Button Click Handler
+        mAddButton.setOnClickListener { mAddButtonHandler() }
 
     }
 
     // Custom function which will be called everytime button pressed
-    private fun buttonClickListener() {
+    private fun mAddButtonHandler() {
 
         // Local variables declaration
         val item_name = mItemName.text.toString()
@@ -72,18 +68,24 @@ class AddItemFragment : BaseFragment() {
         // Coroutine call
         launch {
             context?.let {
-                val item = ItemEntity(item_name,item_price.toIntOrNull()!!,item_time,item_date)
-                SandSDatabase(it).getItemDao().addItem(item)
+                if (item_name.isEmpty() || item_price.isEmpty()) {
+                    mSnackBar = Snackbar.make(view!!, "Add Fields are Required", Snackbar.LENGTH_LONG)
+                    mSnackBar.show()
+                }
+                else {
+                    val item = ItemEntity(item_name,item_price.toIntOrNull()!!,item_time,item_date)
+                    SandSDatabase(it).getItemDao().addItem(item)
+
+                    // Navigation
+                    val action = AddItemFragmentDirections.backToRecent()
+                    Navigation.findNavController(view!!).navigate(action)
+
+                    // Display message
+                    mSnackBar  = Snackbar.make(view!!, "Item Added Successfully", Snackbar.LENGTH_LONG)
+                    mSnackBar.show()
+
+                }
             }
         }
-
-        // Navigation
-        val action = AddItemFragmentDirections.backToRecent()
-        Navigation.findNavController(view!!).navigate(action)
-
-        // Display message
-        mSnackBar  = Snackbar.make(view!!, "Item Added Successfully", Snackbar.LENGTH_LONG)
-        mSnackBar.show()
-
     }
 }

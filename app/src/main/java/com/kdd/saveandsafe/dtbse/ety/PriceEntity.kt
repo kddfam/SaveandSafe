@@ -17,7 +17,9 @@ data class PriceEntity (
     @ColumnInfo(name = "time")
     var p_time : String,
     @ColumnInfo(name = "date")
-    var p_date : String
+    var p_date : String,
+    @ColumnInfo(name = "e_date")
+    var p_e_date : String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

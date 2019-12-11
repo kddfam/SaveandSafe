@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class RecentFragment : BaseFragment() {
 
-    // Variable Declarations
+    // Views Declarations
     lateinit var mMoveToAddItemButton : TextView
     lateinit var mRecyclerView: RecyclerView
 
@@ -28,17 +28,20 @@ class RecentFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // Variable Initialization
+        // Views Initialization
         mMoveToAddItemButton = view!!.findViewById(R.id.tv_clrone_add_item_page)
         mRecyclerView = view!!.findViewById(R.id.rv_clrtwo)
 
-        // Move to add item page
-        mMoveToAddItemButton.setOnClickListener { handleMoveToAddItemButtonClick() }
-
-        // RecyclerView functions
+        // RecyclerView Calls
         mRecyclerView.layoutManager = LinearLayoutManager(view!!.context)
 
-        // Coroutine call
+        // Move to add item page
+        mMoveToAddItemButton.setOnClickListener { handleMoveToAddItemButtonClick() }
+        loadItemList()
+
+    }
+
+    private fun loadItemList() {
         launch {
             context?.let {
                 val items = SandSDatabase(it).getItemDao().listItem()
@@ -47,7 +50,6 @@ class RecentFragment : BaseFragment() {
         }
     }
 
-    // Custom function which will be called everytime button pressed
     private fun handleMoveToAddItemButtonClick() {
         Navigation.findNavController(view!!).navigate(RecentFragmentDirections.recentToAddItem())
     }

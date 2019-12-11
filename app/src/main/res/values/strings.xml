@@ -10,6 +10,7 @@
     <string name="tv_add_item_price_hint">100</string>
     <string name="add_item_button">Insert Item</string>
     <string name="tv_clrone_add_item_title">New Item</string>
+    <string name="history_title">Your History</string>
 
 
 </resources>

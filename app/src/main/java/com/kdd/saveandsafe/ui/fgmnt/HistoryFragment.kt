@@ -25,7 +25,7 @@ import java.util.*
 
 class HistoryFragment : BaseFragment() {
 
-    // Variable Declarations
+    // Views Declarations
     lateinit var mMoveToRecentButton : TextView
     lateinit var mAddAmountTitle : TextView
     lateinit var mAmount : EditText
@@ -36,11 +36,16 @@ class HistoryFragment : BaseFragment() {
     lateinit var mSnackbar : Snackbar
 
     // Date and Time
-    lateinit var mCalendar: Calendar
+    lateinit var mCalendar : Calendar
+    lateinit var mCalenderForExpiry : Calendar
     lateinit var mSimpleTimeFormat : SimpleDateFormat
     lateinit var mSimpleDateFormat: SimpleDateFormat
-    lateinit var mDate : String
-    lateinit var mTime : String
+    lateinit var mDateInString : String
+    lateinit var mExpiryDateInString : String
+    lateinit var mTimeInString : String
+    lateinit var mCalculateExpiryDate : Date
+    lateinit var mDateStringToDateConversion : Date
+    lateinit var mExpiryDateStringToExpiryDateConversion : Date
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_history, container, false)
@@ -49,60 +54,124 @@ class HistoryFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // Variable Initialization
+        // Views Initialization
         mMoveToRecentButton = view!!.findViewById(R.id.tv_clhone_recent_page)
-        mMoveToRecentButton.setOnClickListener { handleMoveToRecentButtonClick() }
-
-        // Add Amount Title TextView Initialization
         mAddAmountTitle = view!!.findViewById(R.id.tv_clhone_add_amount)
-
-        // EditText initialization
         mAmount = view!!.findViewById(R.id.et_clhone_amount)
-
-        // Done Button Initialization and Click Listener
         mDone = view!!.findViewById(R.id.tv_clhone_done_button)
-        mDone.setOnClickListener { handleDoneButtonClick() }
+        mRecentItemRecyclerView = view!!.findViewById(R.id.rv_clhtwo)
+        mSwipeRefreshLayoutAmount = view!!.findViewById(R.id.srl_clhthree)
+        mAmountHistoryRecyclerView = view!!.findViewById(R.id.rv_clhthree)
 
-        // Date and Time Manipulations
+        // Button Click Handlers
+        mMoveToRecentButton.setOnClickListener { mMoveToRecentButtonHandler() }
+        mDone.setOnClickListener { mDoneHandler() }
+
+        // Recent Item Added RecyclerView
+        mRecentItemRecyclerView.layoutManager = LinearLayoutManager(view!!.context)
+        loadRecentAddedItem()
+
+        // Amount History RecyclerView
+        mAmountHistoryRecyclerView.layoutManager = LinearLayoutManager(view!!.context)
+        mSwipeRefreshLayoutAmount.setOnRefreshListener { loadAmountHistory() }
+        loadAmountHistory()
+
+        // Date and Time
         mCalendar = Calendar.getInstance()
         mSimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
         mSimpleTimeFormat = SimpleDateFormat("hh:mm:ss", Locale.ENGLISH)
-        mDate = mSimpleDateFormat.format(mCalendar.time)
-        mTime = mSimpleTimeFormat.format(mCalendar.time)
 
-        // Recent Items RecyclerView initialization
-        mRecentItemRecyclerView = view!!.findViewById(R.id.rv_clhtwo)
-        mRecentItemRecyclerView.layoutManager = LinearLayoutManager(view!!.context)
+        // Calculating Expiry Date
+        mCalculateExpiryDate = Date()
+        mCalenderForExpiry = Calendar.getInstance()
+        mCalenderForExpiry.time = mCalculateExpiryDate
+        mCalenderForExpiry.add(Calendar.DATE, 30)
+        mCalculateExpiryDate = mCalenderForExpiry.time
 
-        // Amount History RecyclerView Initialization
-        mSwipeRefreshLayoutAmount = view!!.findViewById(R.id.srl_clhthree)
-        mAmountHistoryRecyclerView = view!!.findViewById(R.id.rv_clhthree)
-        mAmountHistoryRecyclerView.layoutManager = LinearLayoutManager(view!!.context)
+        // Formatting Dates
+        mDateInString = mSimpleDateFormat.format(mCalendar.time)
+        Log.e("Date",mDateInString)
+        mTimeInString = mSimpleTimeFormat.format(mCalendar.time)
+        Log.e("Time",mTimeInString)
+        mExpiryDateInString = mSimpleDateFormat.format(mCalculateExpiryDate)
+        Log.e("Expiry Date",mExpiryDateInString)
 
-        // Listing Amount Added by swiping refresh
-        mSwipeRefreshLayoutAmount.setOnRefreshListener { onRefreshListener() }
+    }
 
-        // Listing Recent Item and amount (Recent 3)
+    private fun mMoveToRecentButtonHandler() {
+        val action  = HistoryFragmentDirections.historyToRecent()
+        Navigation.findNavController(view!!).navigate(action)
+    }
+
+    private fun mDoneHandler() {
+        val amount = mAmount.text.toString()
+        val uamount = mAmount.text.toString()
+        val savings = 0
+        val total = 0
+        val time = mTimeInString
+        val date = mDateInString
+        val edate = mExpiryDateInString
+
         launch {
             context?.let {
-                val recent_items = SandSDatabase(it).getItemDao().listRecent()
-                val price_list = SandSDatabase(it).getPriceDao().listLastThree()
-                mRecentItemRecyclerView.adapter = RecentAdapter(recent_items)
-                mAmountHistoryRecyclerView.adapter = HistoryAdapter(price_list)
+                if(amount.isEmpty() || uamount.isEmpty()) {
+                    mSnackbar = Snackbar.make(view!!, "Please Enter Amount", Snackbar.LENGTH_LONG)
+                    mSnackbar.show()
+                }
+                else {
+                    val price = PriceEntity(amount.toIntOrNull()!!, uamount.toIntOrNull()!!, savings, total, time, date, edate)
+                    SandSDatabase(it).getPriceDao().addPrice(price)
+                    mSnackbar = Snackbar.make(view!!, "Added Successfully", Snackbar.LENGTH_LONG)
+                    mSnackbar.show()
+                    mAddAmountTitle.visibility = View.GONE
+                    mAmount.visibility = View.GONE
+                    mDone.visibility = View.GONE
+                }
+            }
+        }
+    }
 
-                // Fetching date and matching for view visibility
+    private fun loadAmountHistory() {
+        mSwipeRefreshLayoutAmount.isRefreshing = true
+        launch {
+            context?.let {
+                val priceLoad = SandSDatabase(it).getPriceDao().listPrice()
+                mAmountHistoryRecyclerView.adapter = HistoryAdapter(priceLoad)
+                mSwipeRefreshLayoutAmount.isRefreshing = false
+                whenToShow()
+            }
+        }
+    }
+
+    private fun loadRecentAddedItem() {
+        launch {
+            context?.let {
+                val itemLoad = SandSDatabase(it).getItemDao().listRecent()
+                mRecentItemRecyclerView.adapter = RecentAdapter(itemLoad)
+                whenToShow()
+            }
+        }
+    }
+
+    private fun whenToShow() {
+        launch {
+            context?.let {
                 try {
-                    val dateToCheck = price_list.get(0)
-                    val convertStringToDateFormat = dateToCheck.p_date
-                    val dateConverter = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(convertStringToDateFormat)
-                    val dateChecker = checkDateRange(dateConverter!!)
-                    if (dateChecker == true) {
+                    val priceLoad = SandSDatabase(it).getPriceDao().listPrice()
+                    val fetchingDateToCheck = priceLoad.get(0)
+                    val fetchingExpiryDateToCheck = priceLoad.get(0)
+                    val dateToCheck = fetchingDateToCheck.p_date
+                    val expiryDateToCheck = fetchingExpiryDateToCheck.p_e_date
+                    mDateStringToDateConversion = mSimpleDateFormat.parse(dateToCheck)!! // 11-12-2019
+                    mExpiryDateStringToExpiryDateConversion = mSimpleDateFormat.parse(expiryDateToCheck)!! // 10-01-2020
+                    if(checkDateValidity(mDateStringToDateConversion,mExpiryDateStringToExpiryDateConversion)) {
+
                         mAddAmountTitle.visibility = View.GONE
                         mAmount.visibility = View.GONE
                         mDone.visibility = View.GONE
                     }
                     else {
-                        Log.e("Hello", "World")
+                        Log.e("Not in between","Not in between")
                     }
                 }
                 catch (e : Exception) {
@@ -110,52 +179,11 @@ class HistoryFragment : BaseFragment() {
                 }
             }
         }
-
     }
 
-    // Custom function which will be called everytime when swipe refresh work specifically only for amount
-    private fun onRefreshListener() {
-        mSwipeRefreshLayoutAmount.isRefreshing = true
-        launch {
-            context?.let {
-                val price_list = SandSDatabase(it).getPriceDao().listLastThree()
-                mAmountHistoryRecyclerView.adapter = HistoryAdapter(price_list)
-                mSwipeRefreshLayoutAmount.isRefreshing = false
-            }
-        }
+    private fun checkDateValidity(date : Date, date1 : Date) : Boolean {
+        return mCalendar.time.after(date) && mCalendar.time.before(date1) // 13-12-2019
     }
 
-    // Custom function which will work whenever the done button is clicked
-    private fun handleDoneButtonClick() {
-        val amount = mAmount.text.toString()
-        val updated_price = mAmount.text.toString()
-        val savings = mAmount.text.toString()
-        val date = mDate
-        val time = mTime
-        val total_items = 0
-        launch {
-            val prices = PriceEntity(amount.toIntOrNull()!!,updated_price.toIntOrNull()!!,savings.toIntOrNull()!!,total_items,time,date)
-            context?.let {
-                SandSDatabase(it).getPriceDao().addPrice(prices)
-                mAddAmountTitle.visibility = View.GONE
-                mAmount.visibility = View.GONE
-                mDone.visibility = View.GONE
-            }
-        }
 
-        mSnackbar = Snackbar.make(view!!, "Price Added Successfully", Snackbar.LENGTH_LONG)
-        mSnackbar.show()
-    }
-
-    // Custom function which will be called everytime button pressed
-    private fun handleMoveToRecentButtonClick() {
-
-        Navigation.findNavController(view!!).navigate(HistoryFragmentDirections.historyToRecent())
-
-    }
-
-    // Custom function for checking the date range
-    private fun checkDateRange(date : Date) : Boolean {
-        return !(date.after(mCalendar.time))
-    }
 }
