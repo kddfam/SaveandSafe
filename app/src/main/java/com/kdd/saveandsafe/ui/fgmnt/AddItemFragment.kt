@@ -76,6 +76,15 @@ class AddItemFragment : BaseFragment() {
                     val item = ItemEntity(item_name,item_price.toIntOrNull()!!,item_time,item_date)
                     SandSDatabase(it).getItemDao().addItem(item)
 
+                    val fetchPrice = SandSDatabase(it).getPriceDao().listRecent()
+                    val getPrices = fetchPrice.get(0)
+                    val price = getPrices.p_updated_amount
+                    val uprice = price-item_price.toInt()
+                    val id = getPrices.p_id
+                    var updateItems = getPrices.p_total_items
+                    updateItems = updateItems+1
+                    SandSDatabase(it).getPriceDao().updateAmount(uprice,updateItems,id)
+
                     // Navigation
                     val action = AddItemFragmentDirections.backToRecent()
                     Navigation.findNavController(view!!).navigate(action)

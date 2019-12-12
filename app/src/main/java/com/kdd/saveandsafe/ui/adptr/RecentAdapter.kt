@@ -34,6 +34,6 @@ class RecentAdapter(val recent_list : List<ItemEntity>) : RecyclerView.Adapter<R
         holder.name.text = i_name.i_name
         holder.price.text = i_price.i_price.toString()
         holder.time.text = i_time.i_time
-        holder.date.text = i_date.i_date
+        holder.date.text = i_date.i_date.toString()
     }
 }

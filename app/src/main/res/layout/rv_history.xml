@@ -31,15 +31,34 @@
                 android:textSize="23sp"
                 android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/cv_tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/eight_dp"
-            android:layout_marginTop="@dimen/eight_dp"
-            android:layout_marginBottom="@dimen/eight_dp"
-            android:layout_gravity="end"
-            android:text="Hello World" />
+            <TextView
+                android:id="@+id/cv_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/eight_dp"
+                android:layout_marginTop="@dimen/eight_dp"
+                android:layout_marginBottom="@dimen/eight_dp"
+                android:layout_gravity="end"
+                android:text="Hello World" />
+
+            <TextView
+                android:id="@+id/cv_tv_update_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/eight_dp"
+                android:layout_marginTop="48dp"
+                android:text="@string/app_name"
+                android:textStyle="bold"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/cv_tv_total_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/eight_dp"
+                android:layout_marginTop="32dp"
+                android:layout_gravity="end"
+                android:text="Hello World" />
 
     </androidx.cardview.widget.CardView>
 
