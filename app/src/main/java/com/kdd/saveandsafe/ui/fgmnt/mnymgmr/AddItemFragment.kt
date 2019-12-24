@@ -6,8 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,6 +106,10 @@ class AddItemFragment : BaseFragment() {
                     val action =
                         AddItemFragmentDirections.backToRecent()
                     Navigation.findNavController(view!!).navigate(action)
+
+                    // Notification Sound
+                    val media_player = MediaPlayer.create(view!!.context, Settings.System.DEFAULT_NOTIFICATION_URI)
+                    media_player.start()
 
                     // Display message
                     mSnackBar  = Snackbar.make(view!!, "Item Added Successfully", Snackbar.LENGTH_LONG)

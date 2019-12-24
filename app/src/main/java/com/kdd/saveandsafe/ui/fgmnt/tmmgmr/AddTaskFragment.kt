@@ -1,7 +1,9 @@
 package com.kdd.saveandsafe.ui.fgmnt.tmmgmr
 
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -109,6 +111,10 @@ class AddTaskFragment : BaseFragment() {
                 // Navigation
                 val action = AddTaskFragmentDirections.backToDisplay()
                 Navigation.findNavController(view!!).navigate(action)
+
+                // Notification Sound
+                val media_player = MediaPlayer.create(view!!.context, Settings.System.DEFAULT_NOTIFICATION_URI)
+                media_player.start()
 
                 // Display message
                 mSnackBar  = Snackbar.make(view!!, "Task Added Successfully", Snackbar.LENGTH_LONG)
