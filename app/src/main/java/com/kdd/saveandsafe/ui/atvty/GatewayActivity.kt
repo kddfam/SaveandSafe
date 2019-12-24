@@ -33,4 +33,9 @@ class GatewayActivity : AppCompatActivity() {
         val intent1 = Intent(this@GatewayActivity, TimeManagement::class.java)
         startActivity(intent1)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

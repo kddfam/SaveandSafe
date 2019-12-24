@@ -90,11 +90,8 @@ class HistoryFragment : BaseFragment() {
 
         // Formatting Dates
         mDateInString = mSimpleDateFormat.format(mCalendar.time)
-        Log.e("Date",mDateInString)
         mTimeInString = mSimpleTimeFormat.format(mCalendar.time)
-        Log.e("Time",mTimeInString)
         mExpiryDateInString = mSimpleDateFormat.format(mCalculateExpiryDate)
-        Log.e("Expiry Date",mExpiryDateInString)
 
     }
 

@@ -26,5 +26,9 @@
         android:id="@+id/addTaskFragment"
         android:name="com.kdd.saveandsafe.ui.fgmnt.tmmgmr.AddTaskFragment"
         android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
+        tools:layout="@layout/fragment_add_task" >
+        <action
+            android:id="@+id/backToDisplay"
+            app:destination="@id/displayFragment" />
+    </fragment>
 </navigation>

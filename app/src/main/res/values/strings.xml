@@ -13,6 +13,14 @@
     <string name="history_title">Your History</string>
     <string name="money_management">Money Manager</string>
     <string name="time_management">Time Manager</string>
+    <string name="bt_add_task_page">Add Task</string>
+    <string name="add_item_task">Add Task</string>
+    <string name="tv_add_task_name_hint">Enter Task</string>
+    <string name="add_task_button">Add Task</string>
+    <string name="rb_one">30 Mins</string>
+    <string name="rb_two">45 Mins</string>
+    <string name="rb_three">60 Mins</string>
+    <string name="rb_four">120 Mins</string>
 
 
 </resources>

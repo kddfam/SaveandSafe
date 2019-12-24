@@ -10,4 +10,9 @@ class MoneyManagement : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_money_management)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }
