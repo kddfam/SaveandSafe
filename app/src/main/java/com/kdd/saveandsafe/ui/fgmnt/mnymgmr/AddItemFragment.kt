@@ -1,6 +1,12 @@
-package com.kdd.saveandsafe.ui.fgmnt
+package com.kdd.saveandsafe.ui.fgmnt.mnymgmr
 
 
+import android.app.*
+import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,12 +38,21 @@ class AddItemFragment : BaseFragment() {
     lateinit var mItemDate : String
     lateinit var mItemTime : String
 
+    // Notifications
+    lateinit var mNotificationManager: NotificationManager
+    lateinit var mNotificationChannel: NotificationChannel
+    lateinit var mBuilder : Notification.Builder
+    private val mChannelID = "com.kdd.saveandsafe.ui.fgmnt"
+    private val mNotificationDescription = "New Item Added"
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_item, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        mNotificationManager = activity!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Views Initialization
         mItemName = view!!.findViewById(R.id.et_add_item_name)
@@ -86,15 +101,49 @@ class AddItemFragment : BaseFragment() {
                     SandSDatabase(it).getPriceDao().updateAmount(uprice,updateItems,id)
 
                     // Navigation
-                    val action = AddItemFragmentDirections.backToRecent()
+                    val action =
+                        AddItemFragmentDirections.backToRecent()
                     Navigation.findNavController(view!!).navigate(action)
 
                     // Display message
                     mSnackBar  = Snackbar.make(view!!, "Item Added Successfully", Snackbar.LENGTH_LONG)
                     mSnackBar.show()
 
+                    showMeTheNotification()
+
                 }
             }
         }
+    }
+
+    private fun showMeTheNotification() {
+        val nameToDisplay = mItemName.text.toString()
+        val priceToDisplay = mItemPrice.text.toString()
+        val intent = Intent(view!!.context, LauncherActivity::class.java)
+        val pendingIntent = PendingIntent.getActivities(view!!.context,0, arrayOf(intent),PendingIntent.FLAG_UPDATE_CURRENT)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mNotificationChannel = NotificationChannel(mChannelID,mNotificationDescription,NotificationManager.IMPORTANCE_HIGH)
+            mNotificationChannel.enableLights(true)
+            mNotificationChannel.enableVibration(true)
+            mNotificationChannel.lightColor = Color.GREEN
+            mNotificationManager.createNotificationChannel(mNotificationChannel)
+
+            mBuilder = Notification.Builder(view!!.context, mChannelID)
+                .setContentTitle("Congratulations..!!")
+                .setContentText("New Item Added with Name : ${nameToDisplay} and Price : ${priceToDisplay}")
+                .setSmallIcon(R.drawable.sands)
+                .setLargeIcon(BitmapFactory.decodeResource(view!!.context.resources, R.drawable.sands))
+                .setContentIntent(pendingIntent)
+        }
+        else {
+            mBuilder = Notification.Builder(view!!.context)
+                .setContentTitle("New Item Added")
+                .setContentText("New Item Added with Name : ${nameToDisplay} and Price : ${priceToDisplay}")
+                .setSmallIcon(R.drawable.sands)
+                .setLargeIcon(BitmapFactory.decodeResource(view!!.context.resources, R.drawable.sands))
+                .setContentIntent(pendingIntent)
+        }
+        mNotificationManager.notify(1245, mBuilder.build())
     }
 }

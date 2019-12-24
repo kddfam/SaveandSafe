@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kdd.saveandsafe">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/sands"
@@ -12,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".ui.atvty.TimeManagement"></activity>
+        <activity android:name=".ui.atvty.MoneyManagement" />
+        <activity android:name=".ui.atvty.GatewayActivity" />
         <activity android:name=".ui.atvty.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

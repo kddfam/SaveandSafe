@@ -1,4 +1,4 @@
-package com.kdd.saveandsafe.ui.fgmnt
+package com.kdd.saveandsafe.ui.fgmnt.mnymgmr
 
 
 import android.os.Bundle

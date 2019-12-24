@@ -1,4 +1,4 @@
-package com.kdd.saveandsafe.ui.fgmnt
+package com.kdd.saveandsafe.ui.fgmnt.mnymgmr
 
 
 import android.os.Bundle
@@ -12,7 +12,7 @@ import java.util.*
 
 class WelcomeFragment : Fragment() {
 
-    // Variable Declarations
+    // Views Declarations
     lateinit var mTimer: Timer
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

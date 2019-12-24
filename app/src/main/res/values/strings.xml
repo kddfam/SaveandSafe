@@ -11,6 +11,8 @@
     <string name="add_item_button">Insert Item</string>
     <string name="tv_clrone_add_item_title">New Item</string>
     <string name="history_title">Your History</string>
+    <string name="money_management">Money Manager</string>
+    <string name="time_management">Time Manager</string>
 
 
 </resources>

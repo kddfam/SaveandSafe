@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="com.kdd.saveandsafe.ui.fgmnt.WelcomeFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.mnymgmr.WelcomeFragment"
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.kdd.saveandsafe.ui.fgmnt.HistoryFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.mnymgmr.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/recentFragment"
-        android:name="com.kdd.saveandsafe.ui.fgmnt.RecentFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.mnymgmr.RecentFragment"
         android:label="fragment_recent"
         tools:layout="@layout/fragment_recent" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
-        android:name="com.kdd.saveandsafe.ui.fgmnt.AddItemFragment"
+        android:name="com.kdd.saveandsafe.ui.fgmnt.mnymgmr.AddItemFragment"
         android:label="fragment_add_item"
         tools:layout="@layout/fragment_add_item" >
         <action
